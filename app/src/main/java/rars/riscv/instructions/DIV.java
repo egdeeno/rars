@@ -1,4 +1,5 @@
 package rars.riscv.instructions;
+import java.util.Optional;
 
 import rars.riscv.hardware.ControlAndStatusRegisterFile;
 
@@ -8,12 +9,13 @@ public class DIV extends Arithmetic {
                 "0000001", "100");
     }
 
-    public long compute(long value, long value2) {
+    public Optional<Long> compute(long value, long value2) {
+        long res = value / value2;
         // Signal illegal division with -1
         if (value2 == 0) {
-            return -1;
+            res = -1;
         }
         // Overflow case should be correct just by Java division
-        return value / value2;
+        return Optional.of(res);
     }
 }

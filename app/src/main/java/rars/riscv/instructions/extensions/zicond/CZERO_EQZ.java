@@ -1,4 +1,5 @@
 package rars.riscv.instructions;
+import java.util.Optional;
 
 public class CZERO_EQZ extends Arithmetic {
     public CZERO_EQZ() {
@@ -6,10 +7,11 @@ public class CZERO_EQZ extends Arithmetic {
                 "0000111", "101");
     }
 
-    public long compute(long value, long value2) {
+    public Optional<Long> compute(long value, long value2) {
+        long res = value;
         if (value2 == 0) {
-            return 0;
+            res = 0;
         }
-        return value;
+        return Optional.of(res);
     }
 }

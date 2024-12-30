@@ -6,6 +6,8 @@ import rars.riscv.hardware.RegisterFile;
 import rars.riscv.BasicInstruction;
 import rars.riscv.BasicInstructionFormat;
 
+import java.util.Optional;
+
 /**
  * Base class for all integer instructions using immediates
  *
@@ -28,7 +30,8 @@ public abstract class Arithmetic extends BasicInstruction {
         if (InstructionSet.rv64){
             RegisterFile.updateRegister(operands[0], compute(RegisterFile.getValueLong(operands[1]),RegisterFile.getValueLong(operands[2])));
         }else {
-            RegisterFile.updateRegister(operands[0], computeW(RegisterFile.getValue(operands[1]),RegisterFile.getValue(operands[2])));
+            long res = computeW(RegisterFile.getValue(operands[1]),RegisterFile.getValue(operands[2])).orElse(99999);
+            RegisterFile.updateRegister(operands[0], Optional.of(res));
         }
     }
 
@@ -37,7 +40,7 @@ public abstract class Arithmetic extends BasicInstruction {
      * @param value2 the value from the second register
      * @return the result to be stored from the instruction
      */
-    protected abstract long compute(long value, long value2);
+    protected abstract Optional<Long> compute(long value, long value2);
 
     /**
      * A version for rv32 / W instructions in rv64, override if the default behaviour is not correct
@@ -45,7 +48,9 @@ public abstract class Arithmetic extends BasicInstruction {
      * @param value2 the value from the second register truncated to 32 bits
      * @return the result to be stored from the instruction
      */
-    protected int computeW(int value, int value2){
-        return (int) compute(value,value2);
+    protected Optional<Integer> computeW(int value, int value2) {
+        long tmp = compute(value,value2).orElse(0L);
+        int res = (int) tmp;
+        return Optional.of(res);
     }
 }

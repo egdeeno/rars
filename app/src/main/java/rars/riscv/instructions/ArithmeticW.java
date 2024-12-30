@@ -1,4 +1,5 @@
 package rars.riscv.instructions;
+import java.util.Optional;
 
 
 public abstract class ArithmeticW extends Arithmetic {
@@ -7,7 +8,8 @@ public abstract class ArithmeticW extends Arithmetic {
         super(usage, description, funct7,funct3,true);
         this.base = base;
     }
-    protected long compute(long value, long value2) {
-        return base.computeW((int)value,(int)value2);
+    protected Optional<Long> compute(long value, long value2) {
+        long res = base.computeW((int)value,(int)value2).orElse(0);
+        return Optional.of(res);
     }
 }

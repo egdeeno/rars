@@ -1,4 +1,5 @@
 package rars.riscv.instructions;
+import java.util.Optional;
 
 public class ROL extends Arithmetic {
     public ROL() {
@@ -6,13 +7,15 @@ public class ROL extends Arithmetic {
                 "0110000", "001");
     }
 
-    public long compute(long value, long value2) {
+    public Optional<Long> compute(long value, long value2) {
         int shamt = (int)value2 & 0b110;
-        return ((value << shamt) | (value >> (64-shamt)));
+        long res = ((value << shamt) | (value >> (64-shamt)));
+        return Optional.of(res);
     }
     
-    public int computeW(int value, int value2) {
+    public Optional<Integer> computeW(int value, int value2) {
         int shamt = value2 & 0b101;
-        return ((value << shamt) | (value >> (32-shamt)));
+        int res = ((value << shamt) | (value >> (32-shamt)));
+        return Optional.of(res);
     }
 }

@@ -6,6 +6,7 @@ import rars.assembler.SymbolTable;
 import rars.riscv.Instruction;
 
 import java.util.Observer;
+import java.util.Optional;
 
 /**
  * Represents the collection of RISCV integer registers.
@@ -55,6 +56,27 @@ public class RegisterFile {
                 Globals.program.getBackStepper().addRegisterFileRestore(num, instance.updateRegister(num, val));
             } else {
                 instance.updateRegister(num, val);
+            }
+        }
+    }
+
+    /**
+     * This method updates the register value who's number is num.  Also handles the lo and hi registers
+     *
+     * @param num Register to set the value of.
+     * @param val The desired value for the register.
+     **/
+
+    public static void updateRegister(int num, Optional<Long> val) {        
+        if (num == 0) {
+            ;
+        } else if (val.isEmpty()) {
+            ;
+        } else {
+            if ((Globals.getSettings().getBackSteppingEnabled())) {
+                Globals.program.getBackStepper().addRegisterFileRestore(num, instance.updateRegister(num, val.orElse(0L)));
+            } else {
+                instance.updateRegister(num, val.orElse(0L));
             }
         }
     }

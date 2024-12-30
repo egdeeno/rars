@@ -1,4 +1,5 @@
 package rars.riscv.instructions;
+import java.util.Optional;
 
 import rars.riscv.hardware.ControlAndStatusRegisterFile;
 
@@ -8,12 +9,13 @@ public class REM extends Arithmetic {
                 "0000001", "110");
     }
 
-    public long compute(long value, long value2) {
+    public Optional<Long> compute(long value, long value2) {
+        long res = value % value2;
         // Division by 0
         if (value2 == 0) {
-            return value;
+            res = value;
         }
         // Overflow case should be correct just by Java modulus
-        return value % value2;
+        return Optional.of(res);
     }
 }

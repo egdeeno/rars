@@ -1,4 +1,5 @@
 package rars.riscv.instructions;
+import java.util.Optional;
 
 public class ORN extends Arithmetic {
     public ORN() {
@@ -6,7 +7,8 @@ public class ORN extends Arithmetic {
                 "0100000", "110");
     }
 
-    public long compute(long value, long value2) {
-        return value | ~value2;
+    public Optional<Long> compute(long value, long value2) {
+        long res = value | ~value2;
+        return Optional.of(res);
     }
 }

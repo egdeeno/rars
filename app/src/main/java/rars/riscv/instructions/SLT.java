@@ -1,4 +1,5 @@
 package rars.riscv.instructions;
+import java.util.Optional;
 
 public class SLT extends Arithmetic {
     public SLT() {
@@ -6,7 +7,8 @@ public class SLT extends Arithmetic {
                 "0000000", "010");
     }
 
-    public long compute(long value, long value2) {
-        return (value < value2) ? 1 : 0;
+    public Optional<Long> compute(long value, long value2) {
+        long res = (value < value2) ? 1 : 0;
+        return Optional.of(res);
     }
 }

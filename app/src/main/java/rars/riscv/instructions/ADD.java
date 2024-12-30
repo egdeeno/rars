@@ -1,4 +1,5 @@
 package rars.riscv.instructions;
+import java.util.Optional;
 
 public class ADD extends Arithmetic {
     public ADD() {
@@ -6,7 +7,8 @@ public class ADD extends Arithmetic {
                 "0000000", "000");
     }
 
-    public long compute(long value, long value2) {
-        return value + value2;
+    public Optional<Long> compute(long value, long value2) {
+        long res = value + value2;
+        return Optional.of(res);
     }
 }
